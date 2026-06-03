@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MxTHI'S DOMAIN • BINARY CONVERTER</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0a0a, #1a0033);
+        }
+        .domain-expansion {
+            box-shadow: 0 0 60px rgba(168, 0, 255, 0.6);
+        }
+        .neon-text {
+            text-shadow: 0 0 20px #a800ff, 0 0 40px #00f0ff;
+        }
+        input {
+            background: #111;
+            border: 2px solid #a800ff;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white font-mono">
+    <div class="max-w-2xl mx-auto pt-12 px-4">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-10">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-gradient-to-br from-purple-600 to-cyan-500 rounded-2xl flex items-center justify-center text-3xl">
+                    👁️
+                </div>
+                <div>
+                    <h1 class="text-4xl font-bold neon-text">MXTHI'S CALCULATOR</h1>
+                    <p class="text-purple-400 text-sm">Domain Expansion: Binary • Decimal</p>
+                </div>
+            </div>
+            <div class="text-xs text-red-500 flex items-center gap-2">
+                <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                MALEVOLENT
+            </div>
+        </div>
+
+        <div class="bg-black/80 border border-purple-500/50 rounded-3xl p-8 domain-expansion">
+            <!-- Tabs -->
+            <div class="flex border-b border-purple-900 mb-8">
+                <button onclick="switchTab(0)" id="tab1" class="tab-button flex-1 py-4 text-center border-b-4 border-purple-500 text-purple-300 font-bold">BINARY TO DECIMAL</button>
+                <button onclick="switchTab(1)" id="tab2" class="tab-button flex-1 py-4 text-center text-gray-500 hover:text-purple-300">DECIMAL TO BINARY</button>
+            </div>
+
+            <!-- Tab 1: Binary → Decimal -->
+            <div id="panel1">
+                <div class="mb-6">
+                    <label class="block text-purple-400 text-sm mb-2">BINARY (Base 2)</label>
+                    <input id="binInput" type="text" maxlength="32" 
+                           class="w-full p-6 text-3xl rounded-2xl focus:outline-none focus:border-cyan-400"
+                           placeholder="101010" oninput="convertBinToDec()">
+                    <div class="text-xs text-gray-500 mt-2 flex justify-between">
+                        <span>Only 0s and 1s allowed</span>
+                        <span id="binLength">0 / 32</span>
+                    </div>
+                </div>
+
+                <div class="text-center my-8">
+                    <i class="fas fa-arrow-down text-4xl text-purple-600"></i>
+                </div>
+
+                <div>
+                    <label class="block text-cyan-400 text-sm mb-2">DECIMAL (Denary)</label>
+                    <div id="decResult" class="w-full p-6 bg-zinc-900 rounded-2xl text-4xl min-h-[80px] flex items-center">
+                        0
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Decimal → Binary -->
+            <div id="panel2" class="hidden">
+                <div class="mb-6">
+                    <label class="block text-cyan-400 text-sm mb-2">DECIMAL (Denary)</label>
+                    <input id="decInput" type="number" 
+                           class="w-full p-6 text-3xl rounded-2xl focus:outline-none focus:border-purple-400"
+                           placeholder="42" oninput="convertDecToBin()">
+                </div>
+
+                <div class="text-center my-8">
+                    <i class="fas fa-arrow-down text-4xl text-purple-600"></i>
+                </div>
+
+                <div>
+                    <label class="block text-purple-400 text-sm mb-2">BINARY (Base 2)</label>
+                    <div id="binResult" class="w-full p-6 bg-zinc-900 rounded-2xl text-4xl min-h-[80px] flex items-center font-mono break-all">
+                        0
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="mt-10 flex gap-4">
+                <button onclick="clearAll()" 
+                        class="flex-1 bg-zinc-900 hover:bg-red-900 text-white py-5 rounded-2xl font-bold transition">
+                    <i class="fas fa-skull"></i> CLEAVE
+                </button>
+                <button onclick="copyResult()" 
+                        class="flex-1 bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-700 hover:to-cyan-600 py-5 rounded-2xl font-bold transition">
+                    <i class="fas fa-copy"></i> COPY TO CLIPBOARD
+                </button>
+            </div>
+        </div>
+
+        <div class="text-center mt-8 text-xs text-purple-600">
+            Built in the image of Ryomen Sukuna • Powered by Grok
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.getElementById('panel1').classList.toggle('hidden', tab !== 0);
+            document.getElementById('panel2').classList.toggle('hidden', tab === 0);
+            
+            document.getElementById('tab1').classList.toggle('border-b-4', tab === 0);
+            document.getElementById('tab1').classList.toggle('border-purple-500', tab === 0);
+            document.getElementById('tab1').classList.toggle('text-purple-300', tab === 0);
+            document.getElementById('tab1').classList.toggle('text-gray-500', tab !== 0);
+            
+            document.getElementById('tab2').classList.toggle('border-b-4', tab === 1);
+            document.getElementById('tab2').classList.toggle('border-purple-500', tab === 1);
+            document.getElementById('tab2').classList.toggle('text-purple-300', tab === 1);
+            document.getElementById('tab2').classList.toggle('text-gray-500', tab !== 1);
+        }
+
+        function convertBinToDec() {
+            const input = document.getElementById('binInput');
+            let bin = input.value.replace(/[^01]/g, '');
+            input.value = bin;
+            
+            document.getElementById('binLength').textContent = `${bin.length} / 32`;
+            
+            if (bin === '') {
+                document.getElementById('decResult').textContent = '0';
+                return;
+            }
+            
+            const decimal = parseInt(bin, 2);
+            document.getElementById('decResult').textContent = decimal.toLocaleString();
+        }
+
+        function convertDecToBin() {
+            const input = document.getElementById('decInput');
+            let dec = parseInt(input.value);
+            
+            if (isNaN(dec) || dec < 0) {
+                document.getElementById('binResult').textContent = '0';
+                return;
+            }
+            
+            const binary = dec.toString(2);
+            document.getElementById('binResult').textContent = binary;
+        }
+
+        function clearAll() {
+            document.getElementById('binInput').value = '';
+            document.getElementById('decInput').value = '';
+            document.getElementById('decResult').textContent = '0';
+            document.getElementById('binResult').textContent = '0';
+            document.getElementById('binLength').textContent = '0 / 32';
+        }
+
+        function copyResult() {
+            let text = '';
+            if (!document.getElementById('panel1').classList.contains('hidden')) {
+                text = document.getElementById('decResult').textContent;
+            } else {
+                text = document.getElementById('binResult').textContent;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const original = event.target.innerHTML;
+                event.target.innerHTML = `<i class="fas fa-check"></i> COPIED`;
+                setTimeout(() => {
+                    event.target.innerHTML = original;
+                }, 1500);
+            });
+        }
+
+        // Initialize
+        window.onload = () => {
+            switchTab(0);
+        };
+    </script>
+</body>
+</html>
